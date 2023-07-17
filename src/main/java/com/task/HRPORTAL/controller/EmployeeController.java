@@ -4,9 +4,8 @@ import com.task.HRPORTAL.entity.Employee;
 import com.task.HRPORTAL.service.EmployeeService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.security.access.prepost.PreAuthorize;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
@@ -21,9 +20,17 @@ public class EmployeeController {
         return employeeService.employeeList();
     }
 
-    //sorting the employee details by our required attribute
-    @GetMapping("/sorting/{pageNumber}/{pageSize}/{sortAttribute}")
-    public Page<Employee> getAll(@PathVariable("pageNumber")int pageNumber, @PathVariable("pageSize")int pageSize, @PathVariable("sortAttribute")String sortAttribute){
-        return (Page<Employee>) employeeService.getAllDetails(pageNumber,pageSize,sortAttribute);
+    @GetMapping("/sorting")
+    public Page<Employee> sortingAllEmployees(@RequestParam("pageNumber") int pageNumber,
+                                              @RequestParam("pageSize") int pageSize,
+                                              @RequestParam("sortAttribute") String sortAttribute) {
+        return (Page<Employee>) employeeService.getAllDetails(pageNumber, pageSize, sortAttribute);
     }
+
+    @PreAuthorize("hasAuthority('HR')")
+    @PostMapping("addNew")
+    public String addEmployee(@RequestBody Employee employee){
+        return employeeService.addNewEmployee(employee);
+    }
+
 }

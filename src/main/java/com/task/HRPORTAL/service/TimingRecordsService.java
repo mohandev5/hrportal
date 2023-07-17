@@ -11,13 +11,9 @@ import com.task.HRPORTAL.repo.TimingRecordsRepo;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-
 import java.sql.Time;
 import java.time.Duration;
-import java.time.LocalTime;
-import java.time.temporal.Temporal;
 import java.util.ArrayList;
-import java.util.Collections;
 import java.util.Date;
 import java.util.List;
 
@@ -41,7 +37,9 @@ public class TimingRecordsService {
     }
 
     public String logout(LogOut logOut) {
+//        System.out.println("hi");
         logOutRepo.save(logOut);
+//        System.out.println("hello");
         return "you logged out successfully";
     }
 
@@ -68,31 +66,33 @@ public class TimingRecordsService {
         return totalDuration;
     }
 
+
     public String leaveApply(Login login) {
         loginRepo.save(login);
         return "you are applied for leave on:" + " " + login.getDate();
     }
+
 
     public String leaveApproval(int empId, Date date) {
         TimingRecords status = timingRecordsRepo.findStatusByEmployeeEmpIdAndDate(empId, date);
         if (status != null && status.getStatus().equalsIgnoreCase("applied for a leave")) {
             status.setStatus("approved");
             timingRecordsRepo.save(status);
-            return "leave approved";
+            return "Congratulations your leave approved";
         }
         return null;
     }
+
 
     public String leaveRejected(int empId, Date date) {
         TimingRecords status = timingRecordsRepo.findStatusByEmployeeEmpIdAndDate(empId, date);
         if (status != null && status.getStatus().equalsIgnoreCase("applied for a leave")) {
             status.setStatus("rejected");
             timingRecordsRepo.save(status);
-            return "sorry your leave rejected";
+            return "sorry your leave rejected ";
         }
         return null;
     }
-
 
 
     public List<Employee> moreThan8HoursWork(Date date) {
@@ -106,7 +106,7 @@ public class TimingRecordsService {
                 for (LogOut logOut : logOuts) {
                     int logoutEmpId = logOut.getEmpId();
                     if (loginEmpId == logoutEmpId) {
-                        Time logoutTime = logOut.getLogOut();  // Retrieve the logout time without invoking toLocalTime()
+                        Time logoutTime = logOut.getLogOut();
                         if (logoutTime != null) {
                             Duration duration = Duration.between(loginTime.toLocalTime(), logoutTime.toLocalTime());
                             if (duration.compareTo(Duration.ofHours(8)) > 0) {

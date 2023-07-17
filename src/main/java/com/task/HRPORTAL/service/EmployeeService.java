@@ -26,4 +26,10 @@ public class EmployeeService {
         Pageable pageable = PageRequest.of(pageNumber, pageSize, Sort.by(sortAttribute));
         return employeeRepo.findAll(pageable);
     }
+
+    public String addNewEmployee(Employee employee){
+         employeeRepo.save(employee);
+         return "new employee was added";
+    }
+
 }
