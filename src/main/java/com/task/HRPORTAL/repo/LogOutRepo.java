@@ -13,4 +13,6 @@ public interface LogOutRepo extends JpaRepository<LogOut,Integer> {
     List<LogOut> findLogOutByEmpIdAndDate(int empId, Date date);
 
     List<LogOut> findEmpIdAndLogOutByDate(Date date);
+
+    List<LogOut>findLogOutByEmpId(int empId);
 }

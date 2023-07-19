@@ -13,4 +13,7 @@ public interface LoginRepo extends JpaRepository<Login,Integer> {
     List<Login> findLogInByEmpIdAndDate(int empId, Date date);
 
     List<Login> findEmpIdAndLogInByDate(Date date);
+
+    List<Login> findLoginByEmpId(int empId);
+
 }
