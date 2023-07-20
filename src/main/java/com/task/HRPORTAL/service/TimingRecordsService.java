@@ -3,23 +3,13 @@ package com.task.HRPORTAL.service;
 import com.task.HRPORTAL.dto.LogOut;
 import com.task.HRPORTAL.dto.Login;
 import com.task.HRPORTAL.entity.Employee;
-import com.task.HRPORTAL.entity.SecurityUser;
 import com.task.HRPORTAL.entity.TimingRecords;
-import com.task.HRPORTAL.exception.AccessDeniedException;
 import com.task.HRPORTAL.exception.TimingRecordServiceException;
 import com.task.HRPORTAL.repo.*;
-import com.task.HRPORTAL.security.UserDetails;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.HttpStatus;
-import org.springframework.security.core.Authentication;
-import org.springframework.security.core.GrantedAuthority;
-import org.springframework.security.core.context.SecurityContextHolder;
-import org.springframework.security.core.parameters.P;
 import org.springframework.stereotype.Service;
-import org.springframework.web.bind.MethodArgumentNotValidException;
-import org.springframework.web.client.HttpStatusCodeException;
 
 import java.sql.Time;
 import java.time.*;
@@ -65,7 +55,7 @@ public class TimingRecordsService {
     }
 
     public Duration totalWorkingHoursInADay(int empId, Optional<Date> date) throws TimingRecordServiceException {
-        try {
+//        try {
             List<Login> loginlist = loginRepo.findLogInByEmpIdAndDate(empId, date);
             List<LogOut> logOutList = logOutRepo.findLogOutByEmpIdAndDate(empId, date);
             Duration totalDuration = Duration.ZERO;
@@ -98,11 +88,13 @@ public class TimingRecordsService {
             } catch (Exception ex) {
                 throw new RuntimeException("error occurred while calculating total working hours:" + ex.getMessage());
             }
-        }catch (Exception ex){
-            logger.error("problem in server"+ex.getMessage());
-            throw new TimingRecordServiceException("problem in server");
+
         }
-    }
+//        catch (Exception ex){
+//            logger.error("problem in server"+ex.getMessage());
+//            throw new TimingRecordServiceException("problem in server");
+//        }
+//    }
 
     public String leaveApply(Login login) throws TimingRecordServiceException {
         try {
@@ -115,7 +107,7 @@ public class TimingRecordsService {
     }
 
     public String leaveApproval(int empId, Optional<Date> date) throws TimingRecordServiceException {
-        try {
+//        try {
             TimingRecords status = timingRecordsRepo.findStatusByEmployeeEmpIdAndDate(empId, date);
             if (empId > 0 || date.isEmpty()) {
                 throw new TimingRecordServiceException("no records found from this empId:" + empId + "on date:" + date);
@@ -130,12 +122,14 @@ public class TimingRecordsService {
                 throw new TimingRecordServiceException("error occurred while approving" + ex.getMessage());
             }
 //            return null;
-        }catch (Exception ex){
-            logger.error("problem in server"+ex.getMessage());
-            throw new TimingRecordServiceException("problem in server");
-        }
         return null;
     }
+//        catch (Exception ex){
+//            logger.error("problem in server"+ex.getMessage());
+//            throw new TimingRecordServiceException("problem in server");
+//        }
+//        return null;
+//    }
 
 
 
@@ -157,11 +151,13 @@ public class TimingRecordsService {
     }
 
     public List<Employee> moreThan8HoursWork(Optional<Date>  date) throws TimingRecordServiceException {
-        try {
+//        TimingRecordsStatus result = new TimingRecordsStatus(0);
+//        try {
             List<Login> logins = loginRepo.findEmpIdAndLogInByDate(date);
             List<LogOut> logOuts = logOutRepo.findEmpIdAndLogOutByDate(date);
             List<Employee> employeesWithMoreThan8HoursWork = new ArrayList<>();
             if (date.isEmpty()) {
+//                result.setStatusCode(404); // Not Found
                 throw new TimingRecordServiceException("Please provide proper date");
             }
             if (logins.isEmpty() || logOuts.isEmpty()) {
@@ -189,15 +185,15 @@ public class TimingRecordsService {
                         }
                     }
                 }
-                if (employeesWithMoreThan8HoursWork.isEmpty()) {
-                    return (List<Employee>) new TimingRecordServiceException("no work moreThan8hours in this date:" + date);
-                }
+//                if (employeesWithMoreThan8HoursWork.isEmpty()) {
+//                    return (List<Employee>) new TimingRecordServiceException("no work moreThan8hours in this date:" + date);
+//                }
                 return employeesWithMoreThan8HoursWork;
             }
-        }catch (Exception ex){
-            logger.error("Error in moreThan8HoursWork method: {}", ex.getMessage());
-            throw new TimingRecordServiceException("problem in server");
-        }
+//        }catch (Exception ex){
+//            logger.error("Error in moreThan8HoursWork method: {}", ex.getMessage());
+//            throw new TimingRecordServiceException("problem in server");
+//        }
     }
 
 //    public List<SecurityUser> findallUsers(){

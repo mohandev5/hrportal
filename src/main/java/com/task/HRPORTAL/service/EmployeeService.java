@@ -42,7 +42,7 @@ public class EmployeeService {
 
 
     public Page<Employee> getAllDetails(int pageNumber, int pageSize, String sortAttribute) throws EmployeeServiceException {
-        try {
+//        try {
             if (pageNumber < 0 || pageSize < 0 || sortAttribute.isEmpty()) {
                 throw new EmployeeServiceException("Please provide the required properties: pageNumber, pageSize, and sortAttribute.");
             }
@@ -56,10 +56,11 @@ public class EmployeeService {
             } catch (Exception ex) {
                 throw new EmployeeServiceException("Error occurred while retrieving employee details by sorting: " + ex.getMessage());
             }
-        }catch (Exception ex){
-            logger.error("problem in server"+ex.getMessage());
-            throw new EmployeeServiceException("Problem in server");
-        }
+//        }
+//        catch (Exception ex){
+//            logger.error("problem in server"+ex.getMessage());
+//            throw new EmployeeServiceException("Problem in server");
+//        }
     }
 
     public String addNewEmployee(Employee employee) throws EmployeeServiceException {
