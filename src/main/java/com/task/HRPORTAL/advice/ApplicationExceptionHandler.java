@@ -1,5 +1,6 @@
 package com.task.HRPORTAL.advice;
 
+import com.task.HRPORTAL.exception.AccessDeniedException;
 import com.task.HRPORTAL.exception.EmployeeServiceException;
 import com.task.HRPORTAL.exception.SecurityExeception;
 import com.task.HRPORTAL.exception.TimingRecordServiceException;
@@ -24,6 +25,7 @@ public class ApplicationExceptionHandler {
     }
 //    @ResponseStatus(HttpStatus.INTERNAL_SERVER_ERROR)
     @ExceptionHandler(TimingRecordServiceException.class)
+    @ResponseStatus(HttpStatus.BAD_REQUEST)
     public Map<String,String>BusinessException(TimingRecordServiceException ex){
         Map<String,String> errormap = new HashMap<>();
         errormap.put("errorMessage:", ex.getMessage());
@@ -42,6 +44,30 @@ public class ApplicationExceptionHandler {
         Map<String,String> errormap = new HashMap<>();
         errormap.put("errorMessage:", ex.getMessage());
         return errormap;
+    }
+
+    @ExceptionHandler(AccessDeniedException.class)
+//    @ResponseStatus(HttpStatus.FORBIDDEN)
+    public Map<String,String>security(AccessDeniedException ex){
+        Map<String,String> errormap = new HashMap<>();
+        errormap.put("errorMessage:", ex.getMessage());
+        return errormap;
+    }
+
+//    @ExceptionHandler(TimingRecordServiceException.class)
+//    @ResponseStatus(HttpStatus.BAD_REQUEST)
+//    public Map<String, String> handleTimingRecordServiceException(TimingRecordServiceException ex) {
+//        Map<String, String> errorMap = new HashMap<>();
+//        errorMap.put("errorMessage", ex.getMessage());
+//        return errorMap;
+//    }
+
+    @ExceptionHandler(IllegalArgumentException.class)
+    @ResponseStatus(HttpStatus.BAD_REQUEST)
+    public Map<String, String> handleIllegalArgumentException(IllegalArgumentException ex) {
+        Map<String, String> errorMap = new HashMap<>();
+        errorMap.put("errorMessage", ex.getMessage());
+        return errorMap;
     }
 
 }

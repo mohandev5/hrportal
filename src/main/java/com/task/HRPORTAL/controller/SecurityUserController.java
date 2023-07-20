@@ -21,4 +21,5 @@ public class SecurityUserController {
     public ResponseEntity<String> addSecurity(@RequestBody SecurityUser securityUser) throws SecurityExeception {
         return ResponseEntity.ok(securityUserService.addNewUser(securityUser));
     }
+
 }

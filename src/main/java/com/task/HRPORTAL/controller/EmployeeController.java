@@ -3,6 +3,7 @@ import com.task.HRPORTAL.entity.Employee;
 import com.task.HRPORTAL.exception.EmployeeServiceException;
 import com.task.HRPORTAL.service.EmployeeService;
 import lombok.extern.slf4j.Slf4j;
+import org.apache.tomcat.util.http.parser.Authorization;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -24,10 +25,9 @@ public class EmployeeController {
     @Autowired
     private EmployeeService employeeService;
 
-
     @GetMapping("/list")
-    public ResponseEntity<List<Employee>> getAll() throws EmployeeServiceException {
-        return ResponseEntity.ok(employeeService.employeeList());
+    public ResponseEntity<List<Employee>> getAll(@RequestHeader(value = "Authorization")String Authorization) throws EmployeeServiceException {
+        return ResponseEntity.ok(employeeService.employeeList(Authorization));
     }
 
     @GetMapping("/sorting")
