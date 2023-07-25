@@ -4,6 +4,7 @@ import com.task.HRPORTAL.entity.SecurityUser;
 import com.task.HRPORTAL.exception.SecurityExeception;
 import com.task.HRPORTAL.repo.SecurityUserRepo;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
@@ -22,7 +23,7 @@ public class SecurityUserService {
             securityUserRepo.save(user);
             return "user created successfully";
         }catch(Exception ex){
-            throw new SecurityExeception("error occurred while adding an security user"+ex.getMessage());
+            throw new SecurityExeception("error occurred while adding an security user"+ex.getMessage(), HttpStatus.INTERNAL_SERVER_ERROR.value());
         }
     }
 }

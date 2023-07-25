@@ -24,7 +24,7 @@ public class CustomAuthenticationEntryPoint extends Http403ForbiddenEntryPoint {
         if (request.getUserPrincipal() != null) {
             errorMap.put("errorMessage", "Access Denied for you");
         } else {
-            errorMap.put("errorMessage", "You are not authenticated");
+            errorMap.put("errorMessage", "please check your userName and password");
         }
         response.getWriter().write(new ObjectMapper().writeValueAsString(errorMap));
     }

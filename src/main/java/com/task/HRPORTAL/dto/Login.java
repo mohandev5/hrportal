@@ -3,8 +3,9 @@ package com.task.HRPORTAL.dto;
 import jakarta.persistence.*;
 import lombok.*;
 
-import java.sql.Date;
 import java.sql.Time;
+import java.util.Date;
+import java.util.Optional;
 
 @Entity
 @Table(name = "timings")
@@ -27,7 +28,6 @@ public class Login {
 
     @Column(name = "date")
     private Date date;
-
 
     @Column(name = "status")
     private String status;

@@ -3,9 +3,10 @@ package com.task.HRPORTAL.dto;
 import jakarta.persistence.*;
 import lombok.*;
 
-import java.sql.Date;
 import java.sql.Time;
+import java.util.Date;
 import java.util.Objects;
+import java.util.Optional;
 
 @Entity
 @Table(name = "timings")

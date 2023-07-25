@@ -95,5 +95,4 @@ public class Security {
     private AuthenticationEntryPoint authenticationEntryPoint() {
         return new Http403ForbiddenEntryPoint();
     }
-
 }
